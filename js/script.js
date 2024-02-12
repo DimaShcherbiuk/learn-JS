@@ -1,34 +1,51 @@
-const books = [
-  {
-    title: "The Last Kingdom",
-    author: "Bernard Cornwell",
-    rating: 8.38,
-  },
-  {
-    title: "Beside Still Waters",
-    author: "Robert Sheckley",
-    rating: 8.51,
-  },
-  {
-    title: "The Dream of a Ridiculous Man",
-    author: "Fyodor Dostoevsky",
-    rating: 7.75,
-  },
-  { title: "Redder Than Blood", author: "Tanith Lee", rating: 7.94 },
-  {
-    title: "The Dreams in the Witch House",
-    author: "Howard Lovecraft",
-    rating: 8.67,
-  },
-];
-const MIN_BOOK_RATING = 8;
+class User {
+  email;
 
-const names = books
-  
-  .filter((book) => book.rating > MIN_BOOK_RATING)
-  .map(book => book.author)
-  .toSorted((a, b) => a.localeCompare(b));
+  constructor(email) {
+    this.email = email;
+  }
 
-console.log(names)
+  get email() {
+    return this.email;
+  }
+
+  set email(newEmail) {
+    this.email = newEmail;
+  }
+}
+class Admin extends User {
+  blacklistedEmails = [];
   
-  // .toSorted((a, b) => a.author.localeCompare(b.author));
+  static role = {
+    BASIC: "basic",
+    SUPERUSER: "superuser",
+  };
+
+  constructor({ email, access }) {
+    super(email);
+    this.access = access;
+  }
+
+    
+
+    blacklist(email) {
+      this.blacklistedEmails.push(email);
+    }
+
+    isBlacklisted(email) {
+      return this.blacklistedEmails.includes(email);
+    }
+}
+
+const mango = new Admin({
+  email: "mango@mail.com",
+  access: Admin.role.SUPERUSER,
+});
+
+console.log(mango.email); // "mango@mail.com"
+console.log(mango.access); // "superuser"
+
+mango.blacklist("poly@mail.com");
+console.log(mango.blacklistedEmails); // ["poly@mail.com"]
+console.log(mango.isBlacklisted("mango@mail.com")); // false
+console.log(mango.isBlacklisted("poly@mail.com")); // true
