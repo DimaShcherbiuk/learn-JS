@@ -1,51 +1,5 @@
-class User {
-  email;
+console.log(_.sum([4, 2, 8, 6])); // 20
+console.log(_.sum([5, 10])); // 15
 
-  constructor(email) {
-    this.email = email;
-  }
-
-  get email() {
-    return this.email;
-  }
-
-  set email(newEmail) {
-    this.email = newEmail;
-  }
-}
-class Admin extends User {
-  blacklistedEmails = [];
-  
-  static role = {
-    BASIC: "basic",
-    SUPERUSER: "superuser",
-  };
-
-  constructor({ email, access }) {
-    super(email);
-    this.access = access;
-  }
-
-    
-
-    blacklist(email) {
-      this.blacklistedEmails.push(email);
-    }
-
-    isBlacklisted(email) {
-      return this.blacklistedEmails.includes(email);
-    }
-}
-
-const mango = new Admin({
-  email: "mango@mail.com",
-  access: Admin.role.SUPERUSER,
-});
-
-console.log(mango.email); // "mango@mail.com"
-console.log(mango.access); // "superuser"
-
-mango.blacklist("poly@mail.com");
-console.log(mango.blacklistedEmails); // ["poly@mail.com"]
-console.log(mango.isBlacklisted("mango@mail.com")); // false
-console.log(mango.isBlacklisted("poly@mail.com")); // true
+console.log(_.shuffle([1, 2, 3, 4])); // [4, 1, 3, 2]
+console.log(_.shuffle([1, 2, 3, 4])); // [3, 2, 1, 4]
